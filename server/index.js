@@ -7,6 +7,9 @@ import morgan from "morgan"
 import helmet from "helmet"
 import connectDB from "./src/config/db.js"
 import authRoutes from './src/router/user.routes.js'
+import categoryRouter from "./src/router/category.route.js"
+import uploadRouter from "./src/router/upload.router.js"
+import subCategoryRouter from "./src/router/subCategory.route.js"
 
 const app = express()
 process.setMaxListeners(15)
@@ -33,6 +36,9 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/user', authRoutes)
+app.use('/api/category', categoryRouter)
+app.use('/api/file',uploadRouter)
+app.use('/api/subcategory', subCategoryRouter)
 
 connectDB().then(() => {
     app.listen(PORT, () => {

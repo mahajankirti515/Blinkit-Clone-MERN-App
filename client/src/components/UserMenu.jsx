@@ -8,6 +8,7 @@ import { logout } from "../redux/userSlice";
 import toast from "react-hot-toast";
 import AxiosToastError from "../utils/AxiosToastError";
 import { TbExternalLink } from "react-icons/tb";
+import isAdmin from "../utils/isAdmin";
 
 const UserMenu = ({ close }) => {
   const user = useSelector((state) => state?.user);
@@ -36,17 +37,24 @@ const UserMenu = ({ close }) => {
   };
 
   const handleClose = () => {
-    if(close){
-      close()
+    if (close) {
+      close();
     }
-  }
+  };
 
   return (
     <div>
       <div className="font-semibold">My Account</div>
       <div className="text-sm flex items-center gap-2">
-        <span className="max-w-52 text-ellipsis line-clamp-1">{user.name || user.mobile}</span>
-        <Link onClick={handleClose} to={"/deshboard/profile"} className="hover:[color:var(--primary-200)]">
+        <span className="max-w-52 text-ellipsis line-clamp-1">
+          {user.name || user.mobile}
+          <span className="text-red-600 font-medium">{user.role === "ADMIN" ? " (Admin)" : ""}</span>
+        </span>
+        <Link
+          onClick={handleClose}
+          to={"/deshboard/profile"}
+          className="hover:[color:var(--primary-200)]"
+        >
           <TbExternalLink size={15} />
         </Link>
       </div>
@@ -54,10 +62,59 @@ const UserMenu = ({ close }) => {
       <Divider />
 
       <div className="text-sm grid gap-1">
-        <Link onClick={handleClose} to={"/deshboard/myorders"} className="px-2 hover:bg-orange-200 py-1">
+        {isAdmin(user.role) && (
+          <Link
+            onClick={handleClose}
+            to={"/deshboard/category"}
+            className="px-2 hover:bg-orange-200 py-1"
+          >
+            Category
+          </Link>
+        )}
+
+        {isAdmin(user.role) && (
+          <Link
+            onClick={handleClose}
+            to={"/deshboard/subcategory"}
+            className="px-2 hover:bg-orange-200 py-1"
+          >
+            Sub Category
+          </Link>
+        )}
+
+        {isAdmin(user.role) && (
+          <Link
+            onClick={handleClose}
+            to={"/deshboard/upload-product"}
+            className="px-2 hover:bg-orange-200 py-1"
+          >
+            Upload Product
+          </Link>
+        )}
+
+        {isAdmin(user.role) && (
+          <Link
+            onClick={handleClose}
+            to={"/deshboard/product"}
+            className="px-2 hover:bg-orange-200 py-1"
+          >
+            Product
+          </Link>
+        )}
+
+        <Link
+          onClick={handleClose}
+          to={"/deshboard/myorders"}
+          className="px-2 hover:bg-orange-200 py-1"
+        >
           My Orders
         </Link>
-        <Link onClick={handleClose} to={"/deshboard/address"} className="px-2 hover:bg-orange-200 py-1">
+
+        <Link
+          onClick={handleClose}
+          to={"/deshboard/address"}
+          className="px-2 hover:bg-orange-200 py-1"
+        >
           Save Address
         </Link>
         <button

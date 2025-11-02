@@ -12,6 +12,11 @@ import Deshboard from "../layout/Deshboard";
 import Profile from "../pages/Profile";
 import MyOrders from "../pages/MyOrders";
 import Address from "../pages/Address";
+import CategoryPage from "../pages/CategoryPage";
+import SubCategoryPage from "../pages/SubCategoryPage";
+import ProductAdmin from "../pages/ProductAdmin";
+import UploadProduct from "../pages/UploadProduct";
+import AdminPermission from "../layout/AdminPermission";
 
 const router = createBrowserRouter([
   {
@@ -35,38 +40,70 @@ const router = createBrowserRouter([
         element: <Ragister />,
       },
       {
-        path:"forgot-password",
-        element:<ForgotPassword/>
+        path: "forgot-password",
+        element: <ForgotPassword />,
       },
       {
-        path:"otp-verification",
-        element:<OtpVerification/>
+        path: "otp-verification",
+        element: <OtpVerification />,
       },
       {
-        path:"reset-password",
-        element:<ResetPassword />
+        path: "reset-password",
+        element: <ResetPassword />,
       },
       {
-        path:"user",
-        element:<UserMenuMobile/>
+        path: "user",
+        element: <UserMenuMobile />,
       },
       {
-        path : "deshboard",
-        element:<Deshboard />,
-        children : [
+        path: "deshboard",
+        element: <Deshboard />,
+        children: [
           {
-            path:"profile",
-            element:<Profile />
+            path: "profile",
+            element: <Profile />,
           },
           {
-            path:"myorders",
-            element:<MyOrders />
+            path: "myorders",
+            element: <MyOrders />,
           },
           {
-            path:"address",
-            element:<Address/>
-          }
-        ]
+            path: "address",
+            element: <Address />,
+          },
+          {
+            path: "category",
+            element: (
+              <AdminPermission>
+                <CategoryPage />
+              </AdminPermission>
+            ),
+          },
+          {
+            path: "subcategory",
+            element: (
+              <AdminPermission>
+                <SubCategoryPage />
+              </AdminPermission>
+            ),
+          },
+          {
+            path: "upload-product",
+            element: (
+              <AdminPermission>
+                <UploadProduct />
+              </AdminPermission>
+            ),
+          },
+          {
+            path: "product",
+            element: (
+              <AdminPermission>
+                <ProductAdmin />
+              </AdminPermission>
+            ),
+          },
+        ],
       },
     ],
   },
